@@ -1,0 +1,167 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, total={17cm, 23cm}]{geometry}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{lmodern} % for bold teletype font
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{glossaries}
+\usepackage[portuguese]{babel}
+\usepackage{float}
+\usepackage{courier}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{indentfirst} % Garante a correta indentação do primeiro parágrafo de cada secção
+
+% ----------- CONFIGURAÇÕES PACKAGES ----------- %
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    linkbordercolor = {white},
+}
+
+\definecolor{codeBlue}{rgb}{0.2,0.2,1}
+\definecolor{codeGreen}{rgb}{0,0.5,0}
+\definecolor{codeRed}{rgb}{0.9,0,0}
+\definecolor{CodeGrey}{rgb}{0.46,0.45,0.48}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstset{ %Linguagem
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    showstringspaces=false,
+    captionpos=b,
+    keepspaces=true,
+    numbersep=5pt,
+    breakatwhitespace=true,
+    postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+    basicstyle=\footnotesize,
+    commentstyle=\color{codeGreen},
+    keywordstyle=\color{codeBlue} \ttfamily\small,
+    stringstyle=\color{codeGreen},
+    linewidth=15cm
+}
+
+\titleformat{\section}{\normalfont\large\bfseries\raggedright}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries\raggedright}{\thesubsubsection}{1em}{}
+
+
+
+%Graphic path
+\graphicspath{ {Resourcers/} }
+
+% ----------- CONFIGURAÇÕES PACKAGES ----------- %
+
+% ----------- CONFIGURAÇÕES VARIAVEIS ----------- %
+
+\def\logoEscola{logoIpt.png} %Logo da Escola
+\def\local{Local} %Local
+\def\curso{Engenharia Informática} %Curso
+\def\escola{Instituto Politécnico de Tomar} %Escola
+\def\autor{Afonso Viana \& Igor Fonseca} %Autor relatório
+\def\titulo{Trabalho Prático} %Título do documento
+
+%Estagio
+\def\localEstagio{Local estagio (Opcional)} %Local do estágio
+\def\instEstagio{Instituto do estagio (Opcional)} %Instituição do estágio
+
+% ----------- FIM CONFIGURAÇÕES VARIAVEIS ----------- %
+
+% Configuração do título
+\title{\textbf{\titulo}}
+\author{\Large \autor \vspace{0.3cm}}
+
+\begin{document}
+
+% ---------- FUNÇÕES --------- %
+
+\newcommand{\forceIndent}{\hspace{\parindent}}
+
+% ---------- FIM FUNÇÕES --------- %
+
+% ----------- CAPA RELATORIO----------- %
+
+%Título documento
+\maketitle
+
+%LOGO no canto superior esquerdo
+\begin{tikzpicture}[remember picture,overlay]
+	\node[anchor=north west,yshift=-1.5pt,xshift=1pt]%
+	at (current page.north west)
+	{\includegraphics[scale=0.5]{\logoEscola}};
+\end{tikzpicture}
+
+\vspace{6cm}
+\par
+\large\centering \curso
+\vspace{2mm}
+\par
+\normalsize \escola
+
+\pagenumbering{gobble}
+
+% ---- Opcional, informações de estágio ---- %
+
+%\newpage
+%\begin{tikzpicture}[remember picture,overlay]
+%    \node[anchor=north west,yshift=-1.5pt,xshift=1pt]%
+%    at (current page.north west)
+%    {\includegraphics[scale=0.5]{\logoEscola}};
+% \end{tikzpicture}
+
+%Local estágio caso necessário
+%\vspace{2cm}
+%\Large\textbf{\localEstagio} \par
+%\large \instEstagio
+
+% ---- Opcional, informações de estágio ---- %
+
+% ------------------ FIM CAPA RELATORIO----------------- %
+
+% ---- Opcional, contextualização de documento ---- %
+
+%\newpage
+
+%\raggedleft\small\emph{Relatório de estágio apresentado no Instituto Politécnico de Tomar}
+%\par
+%\raggedleft\small\emph{para cumprimento dos requisitos necessários à obtenção do grau}
+%\par
+%\small\emph{Pós-secundário em Informática}
+
+% ---- Fim Contextualização de documento ---- %
+
+% ----------- DESENVOLVIMENTO RELATORIO----------- %
+
+% -- CONFIGURAÇÕES CONTEÚDO -- %
+
+%gerais
+\raggedright
+\setlength\parindent{24pt}
+\renewcommand{\baselinestretch}{1.2}
+
+% Indice
+\newpage
+\tableofcontents
+
+\newpage
+\renewcommand{\listfigurename}{Lista de figuras}
+\listoffigures
+
+\newpage
+\section{Introdução}
+O presente relatório descreve o desenvolvimento da plataforma SkillBridge, uma aplicação Web cujo objetivo é facilitar a aproximação entre estudantes/profissionais e empresas através da promoção de experiências de job shadowing.
+\par O job shadowing consiste numa prática em que um indivíduo acompanha, durante um curto período de tempo, um profissional no exercício das suas funções, permitindo conhecer de forma prática a realidade de uma determinada profissão ou área de atividade. A plataforma SkillBridge surge como resposta à necessidade de criar um ponto de encontro digital entre quem procura este tipo de experiência e as empresas/profissionais dispostos a proporcioná-la, simplificando todo o processo de divulgação, candidatura e gestão destas oportunidades.
+\par A aplicação foi desenvolvida com recurso a ASP.NET Core MVC e Razor Pages, utilizando Entity Framework e LINQ para o acesso e manipulação dos dados, e SignalR para funcionalidades de comunicação em tempo real. O sistema permite a gestão de utilizadores com diferentes perfis de acesso, a publicação e candidatura a oportunidades de job shadowing, bem como a gestão de toda a informação associada, respeitando as operações fundamentais de criação, edição, eliminação e visualização de dados.
+Ao longo deste relatório serão apresentadas as principais decisões tomadas durante o desenvolvimento, a arquitetura da aplicação, o modelo de dados implementado, as funcionalidades disponibilizadas, bem como os mecanismos de validação, segurança e controlo de acesso utilizados para garantir o correto funcionamento da plataforma.
+
+\section{Desenvolvimento aplicacional}
+\subsection{Estrutura da aplicação}
+
+\end{document}
