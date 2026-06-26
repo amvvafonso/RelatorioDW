@@ -162,8 +162,22 @@ O presente relatório descreve o desenvolvimento da plataforma SkillBridge, uma 
 Ao longo deste relatório serão apresentadas as principais decisões tomadas durante o desenvolvimento, a arquitetura da aplicação, o modelo de dados implementado, as funcionalidades disponibilizadas, bem como os mecanismos de validação, segurança e controlo de acesso utilizados para garantir o correto funcionamento da plataforma.
 
 \section{Desenvolvimento aplicacional}
-\subsection{Estrutura aplicacional}
-\subsubsection{Conceito base}
+\subsection{Estrutura Aplicacional}
+\subsubsection{Arquiteturas}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+\textbf{Componentes}   & \textbf{Tecnologia}                                 \\ \hline
+Framework     & ASP.NET Core (.NET 10) + Razer Pages       \\ \hline
+Autenticação  & ASP.NET Core Identity                      \\ \hline
+Base de Dados & Entity Framework Core com SQL Server       \\ \hline
+Websocket     & SignarR (Chat, Code Editor e Notificações) \\ \hline
+Frontend      & Bootstrap e CSS modular por página         \\ \hline
+\end{tabular}
+\end{table}
+\subsubsection{Conceito Base}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.7]{fluxograma_aplicacional.png}
@@ -171,12 +185,63 @@ Ao longo deste relatório serão apresentadas as principais decisões tomadas du
     \end{center}
 \end{figure}
 
-\subsubsection{Conceito aplicado}
+\subsubsection{Conceito Aplicado}
 \begin{figure}[H]
     \begin{center}
         \includegraphics[scale=0.7]{aplicacao.png}
         \caption{Estrutura aplicacional}
     \end{center}
 \end{figure}
-
+\subsection{Características Aplicacionais e Funcionalidades}
+O projeto \emph{Skillbridge} foi desenvolvido como uma plataforma Web destinada à gestão da intereção entre utilizadores e organizações, permitindo a publicação e gestão de oportunidades, bem como a administração dos diferentes recursos da aplicação.
+\subsubsection{Gestão de Utilizadores}
+A Aplicação implemente um sistema de autenticação baseado no \textbf{ASP.NET Core Identity}, permitindo o registo, autenticação e gestão de contas de utilizador.\\
+Cada utilizador possui um perfil próprio, podendo aceder às funcionalidades disponíveis de acordo com o seu nível de permissões. O controlo de acesso é efetuado através de mecanismo de autorizações, restringido determinadas operações apenas a utilizadores autenticados ou administradores.
+\subsubsection{Gestão de Organizações}
+Uma das principais funcionalidades da plataforma consiste na gestão de organizações.\\
+Qualquer utilizador autenticado por criar novas organizações, editar as respetivas informações e gerir os seus membros.\\
+Durante o desenvolvimento foram ainda implementadas funcionalidades adicionais, tais como:
+\begin{itemize}
+    \item Promoção de membros
+    \item Remoção de membros
+    \item Atualizações das informações da organizações
+    \item Controlo de permissões dos diferentes participantes
+\end{itemize}
+Foi também adicionado a possibilidade de associar imagens/logotipos às organizações, estas imagens iriam ser armazenadas num \emph{bucket} específico no serviço \textbf{Amazon S3}.
+Estas funcionalidades sofreram diversas melhorias ao longo da evolução do projeto, conforme evidenciado pelo histórico de commits.
+\subsubsection{Gestão de Membros}
+Cada organização possui um conjunto de membros associados.\\
+Foram desenvolvidas funcionalidades que permitem:
+\begin{itemize}
+    \item Adicionar novos membros
+    \item Remover participantes
+    \item Promover membros para funções administradoras
+    \item Controlar as permissões de cada elemento
+\end{itemize}
+A implementação deste módulo permite uma gestão mais flexível das organizações existentes na plataforma, no entanto apenas é possível a promoção dos membros.
+\subsubsection{FAQ}
+Foi também criada uma secção (simulada) de \textbf{Perguntas Frequentes (FAQ)} destinada a esclarecer dúvidas existentes na plataforma. Esta funcionalidade iria melhorar significativamente a experiência caso aplicada num cenário real.
+\subsubsection{Sistemas de Notificações}
+Durante o desenvolvimento foram adicionadas notificações visuais destinadas a informar o utilizador sobre o resultado das diferentes operações. Entre estas operações encontram-se:
+\begin{itemize}
+    \item Confirmação de operação realizadas com sucesso
+    \item Mensagem de erro
+    \item Alertas informativos
+    \item Diálogos de confirmação antes de operações
+\end{itemize}
+Estas funcionalidades melhoram a usabilidade da aplicação significativamente.
+\subsection{Tratamento de Erros}
+A aplicação possui páginas de erro personalizadas para diferentes situações.\\
+Sempre que ocorre uma exceção ou um recurso não é encontrado, o utilizador é reencaminhado para páginas específicas, evitando a apresentação de mensagens técnicas do servidor.\\
+Isto permite uma utilização segura e estável de forma a prevenir que o utilizador aceda a páginas "partidas" ou apresentação de erros aplicacionais.
+\subsection{Segurança}
+Durante o desenvolvimento da aplicação foram implementadas diversas medidas destinadas a aumentar a segurança da aplicação. Entre elas destacam-se:
+\begin{itemize}
+    \item Proteção \emph{Anti-Forgery} nos formulários, que preveni o uso de tokens da aplicação a partir de pedidos de outros aplicações menos fidedignas
+    \item Validação de dados recebidos
+    \item Controlo de permissões nas operações
+    \item Autenticação baseada em \emph{Identity}
+    \item Restrição de acesso a funcionalidades administrativas
+\end{itemize}
+Estas medidas reduzem significativamente o risco de ataques comuns em aplicações Web e a inserção de formato de dados errados que por sua vez poderiam danificar o funcionamente da aplicação.
 \end{document}
